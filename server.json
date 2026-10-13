@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "org.maxeds/salesbook",
+  "title": "SalesBook by MaxedS",
+  "description": "Sourced ranking of tech companies that sell to enterprises. Every profile shows its sources.",
+  "version": "0.3.0",
+  "websiteUrl": "https://maxeds.org/tools/salesbook",
+  "repository": {
+    "url": "https://github.com/puneetsharmax/salesbook-mcp",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/puneetsharmax/salesbook-mcp/main/logo-512.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.maxeds.org/mcp"
+    }
+  ]
+}
