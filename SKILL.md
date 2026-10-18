@@ -37,7 +37,7 @@ Or add to `.cursor/mcp.json` / `claude_desktop_config.json`:
 }
 ```
 
-## Available MCP Tools (10 Tools)
+## Available MCP Tools (13 Tools — v0.5.0)
 
 ### Read & Discovery Tools
 1. **`search_startups`** — Search B2B startups by keyword, industry, category, funding stage (`Seed`, `Series A`, `Series B`, `Series C`), or country (`US`, `India`, `Israel`, `France`, etc.). Returns composite scores, category ranks, and evidence summaries.
@@ -46,12 +46,15 @@ Or add to `.cursor/mcp.json` / `claude_desktop_config.json`:
 4. **`get_tombstones`** — Retrieve verified enterprise deployment tombstones and sourced deal case studies across aerospace (ITAR), healthcare (HIPAA), financial services, and industrial manufacturing.
 5. **`get_methodology`** — Explain the SalesBook 5-factor scoring rubric, evidence weighting, and enterprise readiness criteria.
 6. **`check_listing`** — Check how a startup appears on the public SalesBook index by company name or domain (`score`, `grade`, `rank`, `peer comparison`, and `verify_url`).
-7. **`find_prospects`** — Given a startup's domain or ICP description, return ranked Fortune 500 / Global 1000 enterprise accounts scored for buyer fit (`0-100`) with signal rationale.
+7. **`find_prospects`** — Given a startup's domain or ICP description, return ranked Fortune 500 / Global 2000 enterprise accounts scored for buyer fit (`0-100`) with active startup pilot programs, supplier portals, and signal rationale.
+8. **`compare_vendors`** — Head-to-head enterprise buyer comparison of 2–5 startups (rank, buyer-readiness score, evidence grade, deal tombstones, agent-readiness, and executive takeaways).
+9. **`find_alternatives`** — Top-ranked enterprise-ready alternatives and competitors to any startup or vendor in the same vertical.
+10. **`get_buying_windows`** — Dated macro enterprise buying windows (e.g. SAP ECC Dec 2027 sunset, VMware ELA renewals, CMS Prior Auth FHIR rule) plus 197 Global 2000 active startup pilot programs and supplier onboarding portals.
 
 ### Founder & Verification Tools
-8. **`update_listing`** — Submit updated traction, funding, customer logos, or product details for a startup listing.
-9. **`report_correction`** — Flag factual corrections with a verifiable source URL.
-10. **`opt_in_for_intros`** — Register founder opt-in for curated 1-on-1 Fortune 500 enterprise buyer introductions via MaxedS (zero startup fee on intros; buyer review cycles run with an immutable written Decision Record).
+11. **`update_listing`** — Submit updated traction, funding, customer logos, or product details for a startup listing.
+12. **`report_correction`** — Flag factual corrections with a verifiable source URL.
+13. **`opt_in_for_intros`** — Register founder opt-in for curated 1-on-1 Fortune 500 enterprise buyer introductions via MaxedS (zero startup fee on intros; buyer review cycles run with an immutable written Decision Record).
 
 ## Direct REST API (No MCP Client Needed)
 

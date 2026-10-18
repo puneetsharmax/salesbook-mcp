@@ -3,7 +3,7 @@
   "name": "org.maxeds/salesbook",
   "title": "SalesBook by MaxedS: B2B Startup Rankings & Enterprise Vendor Discovery",
   "description": "B2B startup rankings, enterprise AI vendor discovery, buyer-fit scores, and sourced deal claims.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "websiteUrl": "https://maxeds.org/tools/salesbook",
   "repository": {
     "url": "https://github.com/puneetsharmax/salesbook-mcp",
@@ -13,7 +13,9 @@
     {
       "src": "https://raw.githubusercontent.com/puneetsharmax/salesbook-mcp/main/logo-512.png",
       "mimeType": "image/png",
-      "sizes": ["512x512"]
+      "sizes": [
+        "512x512"
+      ]
     }
   ],
   "remotes": [
