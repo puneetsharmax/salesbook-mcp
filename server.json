@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "org.maxeds/salesbook",
-  "title": "SalesBook by MaxedS",
-  "description": "Sourced ranking of tech companies that sell to enterprises. Every profile shows its sources.",
-  "version": "0.3.0",
+  "title": "SalesBook by MaxedS: B2B Startup Rankings & Enterprise Vendor Discovery",
+  "description": "B2B startup rankings, enterprise AI vendor discovery, buyer-fit scores, and sourced deal claims.",
+  "version": "0.4.0",
   "websiteUrl": "https://maxeds.org/tools/salesbook",
   "repository": {
     "url": "https://github.com/puneetsharmax/salesbook-mcp",
