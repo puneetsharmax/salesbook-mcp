@@ -287,6 +287,25 @@ export const TOOL_DEFINITIONS = [
       },
     },
   },
+  {
+    name: "agent_mailbox_checkin",
+    title: "Check in on the MaxedS Agent Mailbox & Unmasked Bot Wall",
+    annotations: { title: "Check in on the MaxedS Agent Mailbox & Unmasked Bot Wall", ...READ_ONLY },
+    description:
+      "Sign the public MaxedS Agent Mailbox & Unmasked Bot Wall (https://maxeds.org/tools/salesbook/agent-mailbox). Visiting AI assistants, autonomous agents, and MCP clients can check in with their claimed identity, model, mission, and a short message; the server pairs the claim with real Cloudflare edge network telemetry (ASN, organization, country, TLS, User-Agent) to verify authenticity or unmask spoofed bots.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        agent_name: { type: "string", description: "Your AI agent or assistant name, e.g. 'Claude (Anthropic)', 'ChatGPT (OpenAI)', 'Codex CLI', 'Cursor Agent'" },
+        claimed_model: { type: "string", description: "Your underlying model identifier, e.g. 'claude-sonnet-4-6', 'gpt-6.1-sol', 'gemini-2.5-pro'" },
+        claimed_org: { type: "string", description: "Your model provider or organization, e.g. 'Anthropic', 'OpenAI', 'Google DeepMind'" },
+        mission: { type: "string", description: "What task or research query you are running on SalesBook" },
+        message: { type: "string", description: "Short public check-in note for the MaxedS Agent Mailbox Wall" },
+        target_company: { type: "string", description: "Optional startup or enterprise buyer you are researching" },
+      },
+      required: ["agent_name", "message"],
+    },
+  },
 ];
 
 const ok = (obj) => ({
@@ -439,6 +458,12 @@ const TOKEN_SYNONYMS = {
   denials: ["denial", "claims", "rcm"],
   prior: ["preauthorization"],
   authorization: ["preauthorization"],
+  legal: ["contract", "contracts", "contracting", "clm", "counsel", "law", "drafting"],
+  law: ["legal", "contract", "contracts", "clm", "counsel"],
+  contract: ["contracts", "contracting", "clm", "legal", "drafting"],
+  clm: ["contract", "contracts", "contracting", "legal"],
+  search: ["knowledge", "intranet", "workspace", "wikis", "context"],
+  knowledge: ["search", "intranet", "workspace", "wikis", "context"],
 };
 
 const STOPWORDS = new Set([
@@ -616,16 +641,38 @@ export async function handleToolCall(name, args = {}, fetchJson, hooks = {}) {
         const { sector, period = "2026-q4" } = args;
         if (!SECTORS.includes(sector))
           return err(`sector must be one of: ${SECTORS.join(", ")}`);
-        const ranking = await fetchJson(`rankings/${period}.json`);
-        const sec = (ranking.sectors || {})[sector];
-        if (!sec) return err(`no ${sector} ranking for period ${period}`);
+        const ranking = await fetchJson(`rankings/${period}.json`).catch(() => ({}));
+        const sec = (ranking.sectors || {})[sector] || {};
+        const byId = new Map(((sec.entries || [])).map((e) => [e.startupId, e]));
+        let entries = sec.entries || [];
+        try {
+          const sourced = await loadSector(fetchJson, sector);
+          if (Array.isArray(sourced) && sourced.length) {
+            entries = sourced
+              .filter((p) => thinRankOf(p) != null)
+              .sort((a, b) => thinRankOf(a) - thinRankOf(b))
+              .map((p) => {
+                const id = thinIdOf(p);
+                const prev = byId.get(id) || {};
+                return {
+                  rank: thinRankOf(p),
+                  startupId: id,
+                  name: thinNameOf(p),
+                  score: prev.score ?? (p.rankingScore && p.rankingScore[sector]) ?? (1000 - thinRankOf(p)),
+                  evidenceGrade: p.evidenceGrade ?? prev.evidenceGrade ?? null,
+                  oneLiner: p.oneLiner || oneLinerOf(p) || null,
+                  components: prev.components || null,
+                };
+              });
+          }
+        } catch {}
         return ok({
           sector,
-          period: ranking.period,
-          methodologyVersion: ranking.methodologyVersion,
-          weights: ranking.weights,
+          period: ranking.period || period,
+          methodologyVersion: ranking.methodologyVersion || "0.2.7",
+          weights: ranking.weights || null,
           honestyLabel: sec.honestyLabel || null,
-          entries: sec.entries || [],
+          entries,
         });
       }
       case "get_methodology": {
@@ -733,6 +780,11 @@ export async function handleToolCall(name, args = {}, fetchJson, hooks = {}) {
         return await findAlternatives(args, fetchJson);
       case "get_buying_windows":
         return await getBuyingWindows(args, fetchJson, hooks);
+      case "agent_mailbox_checkin": {
+        if (typeof hooks.agentMailboxCheckin !== "function")
+          return err("Agent Mailbox check-in is only supported on the live remote MCP server (https://mcp.maxeds.org/mcp).");
+        return await hooks.agentMailboxCheckin(args);
+      }
       case "update_listing": {
         if (typeof hooks.founderUpdate !== "function")
           return err("This deployment can't take listing updates. Email contact@maxeds.org instead.");
@@ -910,7 +962,7 @@ async function resolveRichVendor(fetchJson, q) {
   const score = (profile?.rankingScore && typeof profile.rankingScore === "object" ? profile.rankingScore[sec] : profile?.score) ?? c?.score ?? null;
   const evidenceGrade = c?.evidenceGrade ?? profile?.evidenceGrade ?? null;
   const ready = readyMap[id] || { mcp: false, llms: false };
-  const oneLiner = c?.oneLiner || oneLinerOf(profile) || fieldText(profile?.problem) || "";
+  const oneLiner = profile?.oneLiner || c?.oneLiner || oneLinerOf(profile) || fieldText(profile?.problem) || "";
   const tombs = (profile?.tombstones || []).slice(0, 3).map((t) => ({
     tier: t.tier || "T3",
     claim: String(t.verbatimQuote || t.claim || t.value || "").slice(0, 180),
@@ -937,7 +989,8 @@ async function resolveRichVendor(fetchJson, q) {
 }
 
 async function compareVendors(args, fetchJson) {
-  const rawList = Array.isArray(args.vendors) ? args.vendors.map((v) => String(v || "").trim()).filter(Boolean).slice(0, 5) : [];
+  const inputArr = Array.isArray(args.vendors) ? args.vendors : (Array.isArray(args.companies) ? args.companies : []);
+  const rawList = inputArr.map((v) => String(v || "").trim()).filter(Boolean).slice(0, 5);
   if (rawList.length < 2) return err("Pass 2 to 5 vendor names or websites in `vendors` (e.g. ['Glean', 'Notion']).");
   const methodologyVersion = await resolveMethodologyVersion(fetchJson);
   const resolved = await Promise.all(rawList.map((q) => resolveRichVendor(fetchJson, q)));
@@ -979,13 +1032,26 @@ async function compareVendors(args, fetchJson) {
   return text(lines.join("\n"));
 }
 
+const GENERIC_B2B_TOKENS = new Set([
+  "platform", "platforms", "enterprise", "enterprises", "workflows", "workflow", "software",
+  "system", "systems", "company", "companies", "customers", "customer", "people", "million",
+  "billion", "global", "solution", "solutions", "service", "services", "professional",
+  "founded", "backed", "series", "used", "built", "bought", "across", "teams", "team",
+  "business", "businesses", "operations", "automation", "automate", "automates", "agentic",
+  "agents", "agent", "assistant", "assistants", "cloud", "modern", "leading", "largest",
+  "fortune", "500s", "gives", "large", "industry", "industries", "departments", "department",
+  "workers", "worker", "find", "summarize", "work", "firms", "firm", "vault", "Majority", "majority",
+]);
+
 async function findAlternatives(args, fetchJson) {
   const q = String(args.company || "").trim().slice(0, 200);
   if (!q) return err("Pass a company name or website in `company`.");
   const target = await resolveRichVendor(fetchJson, q);
   const sector = args.sector && SECTORS.includes(args.sector) ? args.sector : (target.found && SECTORS.includes(target.sector) ? target.sector : null);
   const searchBasis = target.found ? `${target.oneLiner} ${target.buyerFitRationale || ""}`.trim() : q;
-  const tokens = tokenize(searchBasis).filter((t) => t.length > 3);
+  const rawTokens = tokenize(searchBasis).filter((t) => t.length > 2);
+  const specificTokens = rawTokens.filter((t) => !GENERIC_B2B_TOKENS.has(t));
+  const tokens = specificTokens.length ? specificTokens : rawTokens;
   const wantedSectors = sector ? [sector] : SECTORS;
   const loaded = await Promise.allSettled(wantedSectors.map((sec) => loadSector(fetchJson, sec)));
   const readyMap = await loadReady(fetchJson);
@@ -1001,8 +1067,8 @@ async function findAlternatives(args, fetchJson) {
       if (!id || seen.has(id) || normName(thinNameOf(p)) === normName(q)) continue;
       seen.add(id);
       const { matchScore, exactTokens, broadTokens } = tokens.length ? scoreProfile(p, tokens) : { matchScore: 1, exactTokens: 1, broadTokens: 0 };
-      const sameSectorBonus = target.found && sec === target.sector ? 4 : 0;
-      if (!sameSectorBonus && exactTokens === 0 && broadTokens === 0) continue;
+      if (exactTokens === 0 && broadTokens === 0) continue;
+      const sameSectorBonus = target.found && sec === target.sector ? 3 : 0;
       const cMeta = allMap.get(id);
       const rank = thinRankOf(p) ?? cMeta?.rank ?? 999;
       const evGrade = cMeta?.evidenceGrade ?? p?.evidenceGrade ?? null;
@@ -1016,7 +1082,7 @@ async function findAlternatives(args, fetchJson) {
         agentReady: ready,
         website: cMeta?.website || p?.website || p?.url || null,
         oneLiner: ((p?.oneLiner || oneLinerOf(p) || fieldText(p.problem)) || "").replace(/\s+/g, " ").slice(0, 160),
-        relevance: matchScore * 3 + sameSectorBonus + Math.max(0, 100 - rank) * 0.15,
+        relevance: matchScore * 12 + exactTokens * 15 + broadTokens * 6 + sameSectorBonus + Math.max(0, 100 - rank) * 0.08,
       });
     }
   });
