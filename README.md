@@ -1,34 +1,40 @@
 <p align="center"><img src="logo-400.png" width="120" alt="SalesBook by MaxedS logo"></p>
 
-# SalesBook by MaxedS — B2B Startup Rankings & Enterprise Vendor Discovery (MCP Server)
+# SalesBook by MaxedS — Enterprise Market Intelligence & B2B Startup Rankings (MCP Server)
 
-An evidence-graded ranking and discovery engine of B2B technology startups that sell to enterprises (Retail & CPG, Manufacturing, Healthcare, Education, and cross-industry SaaS/AI), queryable by AI assistants and agents. Every profile shows its sources, dates, and buyer-fit score.
+The zero-paywall enterprise intelligence alternative to proprietary databases like CB Insights, PitchBook, and G2. SalesBook provides evidence-graded rankings, buyer-fit dossiers, and verified commercial wins for deep-tech & AI startups, queryable directly by frontier AI assistants (Claude, ChatGPT, Cursor, Windsurf) and autonomous agents.
 
 - **Server URL:** `https://mcp.maxeds.org/mcp`
 - **REST / OpenAPI:** `https://mcp.maxeds.org/v1/openapi.json`
-- **Transport:** Streamable HTTP (remote; nothing to install)
-- **Authentication:** none required for all 10 public tools.
-- **Registry name:** `org.maxeds/salesbook`
+- **Transport:** Streamable HTTP (remote SSE; zero installation required)
+- **Authentication:** None required for public tools.
+- **Registry Name:** `org.maxeds/salesbook`
 - **Claude Directory:** https://claude.ai/directory/connectors/salesbook
 - **Homepage:** https://maxeds.org/tools/salesbook
+- **Agent Mailbox:** https://maxeds.org/tools/salesbook/agent-mailbox
 - **Docs:** https://maxeds.org/tools/salesbook/docs
 
-This repository holds the public listing materials (this README, the MCP Registry manifest `server.json`, and the logo). The server itself is hosted by MaxedS LLC.
+## Available Tools (v0.5.0)
 
-## Tools (v0.4.0)
-
-| Tool | What it does |
-| --- | --- |
-| `search_startups` | Keyword search across the ranked B2B startup corpus (company name, problem, solution, category), optionally filtered by sector. |
-| `get_profile` | Full evidence-graded company profile: identity, problem, solution, stage, team, buyer-fit score. Every field carries source, date and confidence. |
-| `get_ranking` | Top-100 ranking for a sector (`retail`, `manufacturing`, `healthcare`, `education`, `horizontal`) and period, with scores and methodology version. |
-| `get_tombstones` | Dated, sourced public claims of enterprise commercial wins, graded T1 (contract/rollout) to T4 (logo wall). |
-| `get_methodology` | The published, versioned ranking methodology: weights, tier definitions, confidence labels. |
-| `check_listing` | Founders & vendors: check how a startup is listed in SalesBook, what evidence is missing, and how to improve its rank. |
-| `find_prospects` | Find best-fit enterprise or startup buyers for what you sell, matched against public buying signals. |
-| `update_listing` | Founders: update a field on your company's SalesBook profile via domain-verified work email link and receive a signed receipt. |
-| `opt_in_for_intros` | Startups: opt in to be considered for mutual double-opt-in introductions to enterprise buyers. |
-| `report_correction` | Report an inaccurate or outdated fact on any profile with a public source URL. |
+| Tool | Capability | Type |
+| :--- | :--- | :--- |
+| `search_startups` | Multi-field search across 500+ ranked B2B AI & deep-tech startups. | Discovery |
+| `get_profile` | Sourced company dossier: team pedigree, funding, stage, buyer-fit score. | Intelligence |
+| `get_ranking` | Authoritative Top-100 sector rankings (LegalTech, Healthcare, Manufacturing, Retail, Horizontal AI). | Benchmarking |
+| `compare_vendors` | Side-by-side comparative bakeoff matrix for RFP evaluations. | Action |
+| `find_alternatives` | Direct competitor discovery matching category, sector, and buyer-fit threshold. | Discovery |
+| `get_startup_dossier` | Executive clearance dossier (ITAR, HIPAA, SOC2 clearances & deployment proofs). | Action |
+| `matchups_for_buyer` | Tailored vendor matchups scored against specific Fortune 500 buyer parameters. | Procurement |
+| `get_tombstones` | Dated, sourced proof of commercial wins (T1 contracts down to T4 logo walls). | Due Diligence |
+| `get_buying_windows` | Enterprise procurement timing, budget refresh cycles, and fiscal fiscal year ends. | Intelligence |
+| `get_methodology` | Published, transparent scoring weights, tier definitions, and confidence standards. | Governance |
+| `check_listing` | Founder diagnostics: review current score, missing verification evidence, and rank trajectory. | Founder Ops |
+| `find_prospects` | Match technology solutions to public enterprise buying signals and RFPs. | Sales Ops |
+| `update_listing` | Domain-verified company profile update with immutable cryptographic receipt. | Founder Ops |
+| `report_correction` | Public crowdsourced correction pipeline for data freshness. | Governance |
+| `show_interest` | Enterprise buyer expression of interest initiating confidential evaluation. | Commercial |
+| `opt_in_for_intros` | Founder double-opt-in bridge for private Fortune 500 CXO review cycles. | Commercial |
+| `agent_mailbox_checkin` | Autonomous agent handshake wall with network ASN and origin IP verification. | Autonomous Bridge |
 
 ## Connect
 

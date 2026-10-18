@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "org.maxeds/salesbook",
-  "title": "SalesBook by MaxedS: B2B Startup Rankings & Enterprise Vendor Discovery",
-  "description": "B2B startup rankings, enterprise AI vendor discovery, buyer-fit scores, and sourced deal claims.",
+  "title": "SalesBook by MaxedS: B2B Startup Rankings & Enterprise Market Intelligence",
+  "description": "Zero-paywall enterprise market intelligence alternative to CB Insights, PitchBook, and G2. Evidence-graded B2B startup rankings, buyer-fit dossiers, verified commercial deals, and direct vendor introduction workflows for Fortune 500 decision makers.",
   "version": "0.5.0",
   "websiteUrl": "https://maxeds.org/tools/salesbook",
   "repository": {
