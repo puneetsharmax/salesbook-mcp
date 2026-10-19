@@ -10,8 +10,8 @@ The zero-paywall enterprise intelligence alternative to proprietary databases li
 - **Authentication:** None required for public tools.
 - **Registry Name:** `org.maxeds/salesbook`
 - **Claude Directory:** https://claude.ai/directory/connectors/salesbook
+- **mcprush Marketplace:** https://mcprush.com/maxeds/salesbook-by-maxeds-mcp
 - **Homepage:** https://maxeds.org/tools/salesbook
-- **Agent Mailbox:** https://maxeds.org/tools/salesbook/agent-mailbox
 - **Docs:** https://maxeds.org/tools/salesbook/docs
 
 ## Available Tools (v0.5.0)
