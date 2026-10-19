@@ -24,7 +24,7 @@ export const TOOL_DEFINITIONS = [
     title: "Search startups",
     annotations: { title: "Search startups", ...READ_ONLY },
     description:
-      "Search the Salesbook Top-100 corpus by keyword (name, problem, solution). Returns a short text list of ranked matches. Sector is optional: omit it to search all sectors (retail, manufacturing, healthcare, education, horizontal).",
+      "Search SalesBook's evidence-graded B2B startup rankings. Alternative to CB Insights, PitchBook, and G2 for finding enterprise-ready tech vendors across Retail, Manufacturing, Healthcare, Education, and AI platforms. Returns rank, score, and verified commercial proof.",
     inputSchema: {
       type: "object",
       properties: {
@@ -40,7 +40,7 @@ export const TOOL_DEFINITIONS = [
     title: "Get startup profile",
     annotations: { title: "Get startup profile", ...READ_ONLY },
     description:
-      "Full evidence-graded startup profile: identity, problem, solution, stage, team, buyer-fit score. Every field carries source, date, and confidence. Profiles are AI-researched from public sources; founders review and correct low-confidence fields.",
+      "Full evidence-graded B2B startup dossier: problem, solution, stage, team, buyer-fit score, and verified enterprise customers. Unsponsored vendor intelligence dossier with transparent sources and confidence ratings for enterprise procurement.",
     inputSchema: {
       type: "object",
       properties: {
@@ -67,7 +67,8 @@ export const TOOL_DEFINITIONS = [
     name: "get_ranking",
     title: "Get sector ranking",
     annotations: { title: "Get sector ranking", ...READ_ONLY },
-    description: "Top-100 ranking for a sector and period, with per-startup scores and the methodology version used.",
+    description:
+      "Get evidence-graded Top-100 B2B startup rankings by sector (retail, manufacturing, healthcare, education, horizontal) and period. Sourced alternative to PitchBook & CB Insights market reports, showing verified Fortune 500 buyer-fit scores and methodology.",
     inputSchema: {
       type: "object",
       properties: {
@@ -231,7 +232,7 @@ export const TOOL_DEFINITIONS = [
     title: "Compare B2B startups & AI vendors (X vs Y)",
     annotations: { title: "Compare B2B startups & AI vendors (X vs Y)", ...READ_ONLY },
     description:
-      "For enterprise buyers and analysts: side-by-side comparison of 2 to 5 startups or AI vendors (e.g. ['Glean', 'Notion'] or ['Harvey', 'Ironclad']). Compares sector rank, overall buyer-readiness score, evidence grade, 6-factor score breakdown (buyer fit, commercial proof, stage maturity, pilot mechanics, team trajectory, completeness), sourced enterprise deal claims (T1–T4), and agent-readiness (MCP connector, llms.txt). Free, unsponsored alternative to G2 and Gartner comparisons.",
+      "Side-by-side enterprise vendor evaluation of 2 to 5 B2B AI startups (e.g. ['Glean', 'Notion']). Unsponsored alternative to Gartner Magic Quadrant & G2. Compares buyer-fit scores, verified commercial deal claims (T1-T4), pilot mechanics, and agent readiness.",
     inputSchema: {
       type: "object",
       properties: {
@@ -255,7 +256,7 @@ export const TOOL_DEFINITIONS = [
     title: "Find best enterprise alternatives to a vendor",
     annotations: { title: "Find best enterprise alternatives to a vendor", ...READ_ONLY },
     description:
-      "Given any B2B startup or vendor name/domain (e.g. 'Glean', 'Harvey', 'Yellow.ai', 'BrowserStack'), find the highest-ranked enterprise-ready alternatives and direct competitors in SalesBook, ranked by buyer fit, commercial proof, and problem/solution overlap. Free alternative to CB Insights market maps and G2 alternatives.",
+      "Find top enterprise-ready alternatives & competitors to any B2B tech vendor (e.g. Glean, Harvey). Free alternative to CB Insights market maps & G2 grids. Ranks alternatives by Fortune 500 buyer fit, verified enterprise traction, and feature overlap.",
     inputSchema: {
       type: "object",
       properties: {
@@ -271,7 +272,7 @@ export const TOOL_DEFINITIONS = [
     title: "Get enterprise buying windows & F500 pilot programs (Why Now)",
     annotations: { title: "Get enterprise buying windows & F500 pilot programs (Why Now)", ...READ_ONLY },
     description:
-      "Why Now intelligence for B2B sellers and enterprise buyers: returns dated macro buying windows from public records (software end-of-support like SAP ECC Dec 2027, VMware/Broadcom migration cliffs, CMS Prior Authorization FHIR mandates, federal/enterprise contract renewals) plus named Global 2000 / Fortune 500 accounts with active startup innovation programs, venture-client pilot desks, and supplier onboarding portals across Retail & CPG, Manufacturing, Healthcare, and Education.",
+      "Enterprise buying windows & Fortune 500 pilot desks (Why Now intelligence). Returns macro replacement cycles (SAP ECC 2027, VMware cliffs, CMS mandates) and active venture-client RFP programs across Retail, Healthcare, and Manufacturing.",
     inputSchema: {
       type: "object",
       properties: {
