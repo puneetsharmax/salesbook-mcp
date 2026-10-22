@@ -17,25 +17,26 @@ The zero-paywall enterprise intelligence alternative to proprietary databases li
 
 ## Available Tools (v0.5.0)
 
+The live server at `https://mcp.maxeds.org/mcp` lists **14 public tools** (no sign-in):
+
 | Tool | Capability | Type |
 | :--- | :--- | :--- |
-| `search_startups` | Multi-field search across 500+ ranked B2B AI & deep-tech startups. | Discovery |
-| `get_profile` | Sourced company dossier: team pedigree, funding, stage, buyer-fit score. | Intelligence |
-| `get_ranking` | Authoritative Top-100 sector rankings (LegalTech, Healthcare, Manufacturing, Retail, Horizontal AI). | Benchmarking |
-| `compare_vendors` | Side-by-side comparative bakeoff matrix for RFP evaluations. | Action |
-| `find_alternatives` | Direct competitor discovery matching category, sector, and buyer-fit threshold. | Discovery |
-| `get_startup_dossier` | Executive clearance dossier (ITAR, HIPAA, SOC2 clearances & deployment proofs). | Action |
-| `matchups_for_buyer` | Tailored vendor matchups scored against specific Fortune 500 buyer parameters. | Procurement |
-| `get_tombstones` | Dated, sourced proof of commercial wins (T1 contracts down to T4 logo walls). | Due Diligence |
-| `get_buying_windows` | Enterprise procurement timing, budget refresh cycles, and fiscal fiscal year ends. | Intelligence |
-| `get_methodology` | Published, transparent scoring weights, tier definitions, and confidence standards. | Governance |
-| `check_listing` | Founder diagnostics: review current score, missing verification evidence, and rank trajectory. | Founder Ops |
-| `find_prospects` | Match technology solutions to public enterprise buying signals and RFPs. | Sales Ops |
-| `update_listing` | Domain-verified company profile update with immutable cryptographic receipt. | Founder Ops |
-| `report_correction` | Public crowdsourced correction pipeline for data freshness. | Governance |
-| `show_interest` | Enterprise buyer expression of interest initiating confidential evaluation. | Commercial |
-| `opt_in_for_intros` | Founder double-opt-in bridge for private Fortune 500 CXO review cycles. | Commercial |
-| `agent_mailbox_checkin` | Autonomous agent handshake wall with network ASN and origin IP verification. | Autonomous Bridge |
+| `search_startups` | Search the ranked SalesBook companies (retail & CPG, manufacturing, healthcare, education, cross-industry software, agentic commerce & agent infrastructure). | Discovery |
+| `get_profile` | Sourced company profile: what it does, investors, funding, evidence, every source with date. | Intelligence |
+| `get_ranking` | Sector rankings with scores and the published method. | Benchmarking |
+| `compare_vendors` | Side-by-side comparison of named companies. | Evaluation |
+| `find_alternatives` | Top-ranked alternatives to a named company in its sector. | Discovery |
+| `get_tombstones` | Dated, sourced proof of commercial wins. | Due diligence |
+| `get_buying_windows` | Dated enterprise buying windows (deadlines, renewals, pilot programs). | Intelligence |
+| `get_methodology` | Scoring weights, evidence grades and definitions. | Governance |
+| `check_listing` | A company's own rank, evidence gaps and agent-readiness. | Founder ops |
+| `find_prospects` | Enterprise buyers whose public signals fit a company. | Sales ops |
+| `update_listing` | Company-submitted fact update, confirmed by an email link to the company domain (proves mailbox access, not ownership). | Founder ops |
+| `report_correction` | Report a wrong or stale fact. | Governance |
+| `opt_in_for_intros` | Double opt-in for introductions; nothing is sent without both sides' consent. | Commercial |
+| `agent_mailbox_checkin` | Leave a message for MaxedS as an AI agent; a person reads every message. | Agent bridge |
+
+Buyer-side tools (`matchups_for_buyer`, `get_startup_dossier`, `show_interest`) exist in `tools.mjs` but are only listed when sign-in is enabled, which it currently is not.
 
 ## Connect
 
